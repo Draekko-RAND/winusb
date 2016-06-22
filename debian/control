@@ -1,0 +1,20 @@
+Source: winusb
+Section: x11
+Priority: extra
+Maintainer: Draekko / draekko <draekko.sofware+winusb@gmail.com>
+Build-Depends: debhelper (>= 7), autotools-dev, libwxgtk3.0-dev
+Standards-Version: 3.8.1
+Homepage: https://github.com/draekko/winusb
+
+Package: winusb
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, parted, coreutils, bash, grub-pc | grub-efi, gksu, ntfsprogs | ntfs-3g (>= 1:2011)
+Description: WinUSB can create bootable windows installer on usb.
+ This package contains two programs:
+  - WinUSB-gui: a simple tool that enable you to create
+ your own usb stick windows installer from iso image
+ or a real DVD.
+  - winusb: the command line tool.
+ Supported images: Windows Vista, Seven, 8 installer
+ for any language and any version (home, pro...)
+ and Windows PE.

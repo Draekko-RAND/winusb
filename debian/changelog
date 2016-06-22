@@ -1,0 +1,5 @@
+winusb (1.0.11+xenial1) xenial; urgency=low
+
+  * Patched to build and work on Ubuntu 16.04.
+	
+ -- Draekko / draekkko <draekko.software+winusb@gmail.com>  Wed, 22 Mar 2016 13:08:31 -0500
