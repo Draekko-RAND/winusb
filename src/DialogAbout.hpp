@@ -23,11 +23,11 @@
 #include "wx/wxprec.h"
 
 #ifdef __BORLANDC__
-    #pragma hdrstop
+#pragma hdrstop
 #endif
 
 #ifndef WX_PRECOMP
-    #include "wx/wx.h"
+#include "wx/wx.h"
 #endif
 //------------------------------------------------------------------------------
 #include <wx/stdpaths.h>
@@ -45,16 +45,15 @@
 #include "AppConfig.hpp"
 ///////////////////////////////////////////////////////////////////////////
 #if defined VERSION
-    #define NUM_VERSION _(VERSION)
+#define NUM_VERSION _(VERSION)
 #else
-    #define NUM_VERSION _T("1.0.0")
+#define NUM_VERSION _T("1.0.0")
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class PanelNoteBookAutors
 ///////////////////////////////////////////////////////////////////////////////
-class PanelNoteBookAutors : public wxPanel
-{
+class PanelNoteBookAutors : public wxPanel {
 public:
     PanelNoteBookAutors(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString &autherName = _T(""), const wxString &imgName = _T(""), const wxString &siteLink = _T(""), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxTAB_TRAVERSAL);
 };
@@ -62,10 +61,9 @@ public:
 ///////////////////////////////////////////////////////////////////////////////
 /// Class about
 ///////////////////////////////////////////////////////////////////////////////
-class DialogAbout : public wxDialog
-{
+class DialogAbout : public wxDialog {
 public:
-	DialogAbout( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("About"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 475,340 ), long style = wxDEFAULT_DIALOG_STYLE );
+    DialogAbout( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("About"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 475,340 ), long style = wxDEFAULT_DIALOG_STYLE );
 
 protected:
     wxStaticBitmap* m_bitmapIcone;

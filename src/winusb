@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Config
 	# Le script quitte en cas d'erreur d'une commande
@@ -144,6 +144,7 @@ function hideNoErr()
 
 function printHelp()
 {
+	echo "winusb v1.0.12" >&2
 	echo "$scriptName usage" >&2
 	echo "Install a windows ISO on an NTFS partition and edit MBR of the device" >&2
 	echo "  $scriptName --install <iso path> <partition>" >&2
@@ -322,17 +323,17 @@ if [ "$installMethod" = 'edit' ]; then
 		echo "Target device is '$device'."
 	fi
 else
-	echo "Formating device..."
+#	echo "Formating device..."
 	device="$targetMedia"
 
 	# Remove all partitions
+	echo "Removing partitions"
 	while true; do
-		partId=$(env LANG='' parted -s "$device" print | tail --lines 2 | grep '^\s[0-9]\+\s\+.*$' | awk '{print $1}')
+		partId=$(parted -s "$device" print | tail --lines 2 | grep '^\s[0-9]\+\s\+.*$' | awk '{print $1}')
 		if [ -n "$partId" ]; then
 			if [ "$(mount | grep -c "${device}${partId}")" != 0 ]; then
 				umount "${device}${partId}"
 			fi
-
 			parted -s "$device" rm "$partId"
 		else
 			break
@@ -340,7 +341,8 @@ else
 	done
 
 	# Create partiton
-	size=$(env LANG='' parted -s "$device" print | grep ^Disk | cut -f2 -d':' | sed 's/\s//g')
+	echo "Create partitions"
+	size=$(parted -s "$device" print | grep ^Disk | cut -f2 -d':' | sed 's/\s//g')
 	parted --align cylinder -s "$device" mkpart primary 1MB "$size" # We start at 1MB for grub (it needs a post-mbr gap for its code)
 	partition="${targetMedia}1" # first partition
 	
@@ -348,6 +350,7 @@ else
 	partprobe "$device" # Reload partition table
 
 	# Create the ntfs partition
+	echo "Formating device..."
 	"$mkntfsProg" --quiet --fast --label 'Windows USB' "$partition"
 fi
 

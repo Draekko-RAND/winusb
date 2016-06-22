@@ -22,8 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 //------------------------------------------------------------------------------
-class PipeManager
-{
+class PipeManager {
 public:
     PipeManager(const std::string &command);
     ~PipeManager();

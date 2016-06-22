@@ -2,7 +2,7 @@
 [Desktop Entry]
 Version=1.0
 Encoding=UTF-8
-Exec=winusbgui
+Exec=gksudo winusbgui
 Icon=winusbgui-icon.png
 Terminal=false
 X-MultipleArgs=false

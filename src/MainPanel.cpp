@@ -36,40 +36,39 @@
 //------------------------------------------------------------------------------
 using namespace std;
 //------------------------------------------------------------------------------
-MainPanel::MainPanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style ) : wxPanel( parent, id, pos, size, style )
-{
+MainPanel::MainPanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style ) : wxPanel( parent, id, pos, size, style ) {
     // Controls
-	wxBoxSizer *MainSizer = new wxBoxSizer( wxVERTICAL );
+    wxBoxSizer *MainSizer = new wxBoxSizer( wxVERTICAL );
 
-	// Iso / CD
-	MainSizer->Add(new wxStaticText(this, wxID_ANY, _("Source :")), 0, wxALL, 3);
+    // Iso / CD
+    MainSizer->Add(new wxStaticText(this, wxID_ANY, _("Source :")), 0, wxALL, 3);
 
     // Iso
-	m_isoChoice = new wxRadioButton(this, wxID_ANY, _("From a disk image (iso)"));
-	MainSizer->Add(m_isoChoice, 0, wxALL, 3);
+    m_isoChoice = new wxRadioButton(this, wxID_ANY, _("From a disk image (iso)"));
+    MainSizer->Add(m_isoChoice, 0, wxALL, 3);
 
-	wxBoxSizer *tmpSizer = new wxBoxSizer( wxHORIZONTAL );
-	tmpSizer->AddSpacer(20);
-	m_isoFile = new wxFilePickerCtrl(this, wxID_ANY, _T(""), _("Please select a disk image"), _T("Iso images (*.iso)|*.iso|All files|*"));
-	tmpSizer->Add(m_isoFile, 1, wxLEFT | wxRIGHT | wxBOTTOM, 3);
-	MainSizer->Add(tmpSizer, 0, wxEXPAND, 0);
+    wxBoxSizer *tmpSizer = new wxBoxSizer( wxHORIZONTAL );
+    tmpSizer->AddSpacer(20);
+    m_isoFile = new wxFilePickerCtrl(this, wxID_ANY, _T(""), _("Please select a disk image"), _T("Iso images (*.iso)|*.iso|All files|*"));
+    tmpSizer->Add(m_isoFile, 1, wxLEFT | wxRIGHT | wxBOTTOM, 3);
+    MainSizer->Add(tmpSizer, 0, wxEXPAND, 0);
 
     // DVD
-	MainSizer->Add(m_dvdChoice = new wxRadioButton(this, wxID_ANY, _("From a CD/DVD drive")), 0, wxALL, 3);
+    MainSizer->Add(m_dvdChoice = new wxRadioButton(this, wxID_ANY, _("From a CD/DVD drive")), 0, wxALL, 3);
 
     // List
-	tmpSizer = new wxBoxSizer( wxHORIZONTAL );
-	tmpSizer->AddSpacer(20);
+    tmpSizer = new wxBoxSizer( wxHORIZONTAL );
+    tmpSizer->AddSpacer(20);
     m_dvdDriveList = new wxListBox(this, wxID_ANY);
     tmpSizer->Add(m_dvdDriveList, 1, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, 3);
-	MainSizer->Add(tmpSizer, 1, wxEXPAND, 0);
+    MainSizer->Add(tmpSizer, 1, wxEXPAND, 0);
 
     // Target
     MainSizer->AddSpacer(30);
 
     MainSizer->Add(new wxStaticText(this, wxID_ANY, _("Target device :")), 0, wxALL, 3);
 
-        // List
+    // List
     m_usbStickList = new wxListBox(this, wxID_ANY);
     MainSizer->Add(m_usbStickList, 1, wxEXPAND | wxALL, 3);
 
@@ -83,38 +82,36 @@ MainPanel::MainPanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, const 
     MainSizer->Add(BtSizer, 0, wxALIGN_RIGHT, 0);
 
     // Finition
-	SetSizer(MainSizer);
+    SetSizer(MainSizer);
 
     /*m_popupMenu = new wxMenu;
     m_popupMenu->Append(m_menuItemAddManually = MenuAddItem(m_popupMenu, wxString(_("Add Manually")) + _T("\tCtrl+N"), _T("add.png")));
     m_popupMenu->Append(m_menuItemAddAutodetect = MenuAddItem(m_popupMenu, wxString(_("Add with autodection")), _T("add.png")));*/
 
-	// Events
-	m_usbStickList->Connect( wxID_ANY, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler(MainPanel::OnListOrFileModified), NULL, this);
-	m_dvdDriveList->Connect( wxID_ANY, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler(MainPanel::OnListOrFileModified), NULL, this);
-	m_isoFile->Connect( wxID_ANY, wxEVT_COMMAND_FILEPICKER_CHANGED, wxCommandEventHandler(MainPanel::OnListOrFileModified), NULL, this);
+    // Events
+    m_usbStickList->Connect( wxID_ANY, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler(MainPanel::OnListOrFileModified), NULL, this);
+    m_dvdDriveList->Connect( wxID_ANY, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler(MainPanel::OnListOrFileModified), NULL, this);
+    m_isoFile->Connect( wxID_ANY, wxEVT_COMMAND_FILEPICKER_CHANGED, wxCommandEventHandler(MainPanel::OnListOrFileModified), NULL, this);
 
-	m_btInstall->Connect( wxID_ANY, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainPanel::OnInstall), NULL, this);
-	m_btRefresh->Connect( wxID_ANY, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainPanel::OnRefresh), NULL, this);
+    m_btInstall->Connect( wxID_ANY, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainPanel::OnInstall), NULL, this);
+    m_btRefresh->Connect( wxID_ANY, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainPanel::OnRefresh), NULL, this);
 
-	m_isoChoice->Connect( wxID_ANY, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(MainPanel::OnSourceOptionChanged), NULL, this);
-	m_dvdChoice->Connect( wxID_ANY, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(MainPanel::OnSourceOptionChanged), NULL, this);
+    m_isoChoice->Connect( wxID_ANY, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(MainPanel::OnSourceOptionChanged), NULL, this);
+    m_dvdChoice->Connect( wxID_ANY, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(MainPanel::OnSourceOptionChanged), NULL, this);
 
-	// Content
-	RefreshListContent();
-	wxCommandEvent tmp;
+    // Content
+    RefreshListContent();
+    wxCommandEvent tmp;
     OnSourceOptionChanged(tmp);
     m_btInstall->Enable(IsInstallOk());
 }
 
 //------------------------------------------------------------------------------
-MainPanel::~MainPanel()
-{
+MainPanel::~MainPanel() {
 
 }
 //------------------------------------------------------------------------------
-void MainPanel::RefreshListContent()
-{
+void MainPanel::RefreshListContent() {
     std::string tmp;
     std::string log;
 
@@ -130,19 +127,16 @@ void MainPanel::RefreshListContent()
         command << "\"$(readlink -f '";
         command << StrWxToStd(findFile(_T("data/listUsb")));
         command << "')\" ";
-        if(showAllChecked)
-        {
+        if(showAllChecked) {
             command << "all ";
         }
         command << "2>&1";
 
         PipeManager pipe(command.str());
 
-        while(! pipe.IsEof())
-        {
+        while(! pipe.IsEof()) {
             tmp = pipe.GetLine();
-            if(tmp.empty())
-            {
+            if(tmp.empty()) {
                 continue;
             }
             log += tmp;
@@ -150,8 +144,7 @@ void MainPanel::RefreshListContent()
             m_usbStickList->Append(StrStdToWx(pipe.GetLine()));
         }
 
-        if(pipe.Close() != 0)
-        {
+        if(pipe.Close() != 0) {
             m_usbStickDevList.clear();
             m_usbStickList->Clear();
 
@@ -167,12 +160,10 @@ void MainPanel::RefreshListContent()
 
         PipeManager pipe(std::string("\"$(readlink -f '") + StrWxToStd(findFile(_T("data/listDvdDrive"))) + "')\" 2>&1");
 
-        while(! pipe.IsEof())
-        {
+        while(! pipe.IsEof()) {
 
             tmp = pipe.GetLine();
-            if(tmp.empty())
-            {
+            if(tmp.empty()) {
                 continue;
             }
             log += tmp;
@@ -180,8 +171,7 @@ void MainPanel::RefreshListContent()
             m_dvdDriveList->Append(StrStdToWx(pipe.GetLine()));
         }
 
-        if(pipe.Close() != 0)
-        {
+        if(pipe.Close() != 0) {
             m_dvdDriveDevList.clear();
             m_dvdDriveList->Clear();
 
@@ -192,8 +182,7 @@ void MainPanel::RefreshListContent()
     m_btInstall->Enable(IsInstallOk());
 }
 //------------------------------------------------------------------------------
-void MainPanel::OnSourceOptionChanged(wxCommandEvent& event)
-{
+void MainPanel::OnSourceOptionChanged(wxCommandEvent& event) {
     bool isIso = m_isoChoice->GetValue();
 
     m_isoFile->Enable(isIso);
@@ -202,41 +191,32 @@ void MainPanel::OnSourceOptionChanged(wxCommandEvent& event)
     m_btInstall->Enable(IsInstallOk());
 }
 //------------------------------------------------------------------------------
-bool MainPanel::IsInstallOk() const
-{
+bool MainPanel::IsInstallOk() const {
     bool isIso = m_isoChoice->GetValue();
     return ((isIso && wxFileExists(m_isoFile->GetPath())) || (!isIso && m_dvdDriveList->GetSelection() != wxNOT_FOUND)) && m_usbStickList->GetSelection() != wxNOT_FOUND;
 }
 //------------------------------------------------------------------------------
-void MainPanel::OnListOrFileModified(wxCommandEvent& event)
-{
-    if(event.GetEventType() == wxEVT_COMMAND_LISTBOX_SELECTED && !event.IsSelection()) // Prevent segmentation fault : list box deselection send event when the frame is destroying an half the objects are deleted
-    {
+void MainPanel::OnListOrFileModified(wxCommandEvent& event) {
+    if(event.GetEventType() == wxEVT_COMMAND_LISTBOX_SELECTED && !event.IsSelection()) { // Prevent segmentation fault : list box deselection send event when the frame is destroying an half the objects are deleted
         return;
     }
 
     m_btInstall->Enable(IsInstallOk());
 }
 //------------------------------------------------------------------------------
-void MainPanel::OnRefresh(wxCommandEvent& event)
-{
+void MainPanel::OnRefresh(wxCommandEvent& event) {
     RefreshListContent();
 }
 //------------------------------------------------------------------------------
-void MainPanel::OnInstall(wxCommandEvent& event)
-{
-    if(IsInstallOk())
-    {
+void MainPanel::OnInstall(wxCommandEvent& event) {
+    if(IsInstallOk()) {
         bool isIso = m_isoChoice->GetValue();
 
         std::string device = m_usbStickDevList.at(m_usbStickList->GetSelection());
         std::string iso;
-        if(isIso)
-        {
+        if(isIso) {
             iso = filenameWxToStd(m_isoFile->GetPath());
-        }
-        else
-        {
+        } else {
             iso = m_dvdDriveDevList.at(m_dvdDriveList->GetSelection());
         }
 
@@ -245,57 +225,40 @@ void MainPanel::OnInstall(wxCommandEvent& event)
         wxProgressDialog *dialog = new wxProgressDialog(_("Installing..."), _("Please wait..."), 100, GetParent(), wxPD_APP_MODAL | wxPD_SMOOTH | wxPD_CAN_ABORT);
 
         wxString log;
-        while(! pipe.IsEof())
-        {
+        while(! pipe.IsEof()) {
             std::string tmp = pipe.GetLine();
-            if(!tmp.empty())
-            {
-                if(*(tmp.end() - 1) == '%')
-                {
+            if(!tmp.empty()) {
+                if(*(tmp.end() - 1) == '%') {
                     long progress;
-                    if(!StrStdToWx(tmp.substr(0, tmp.size() - 1)).ToLong(&progress))
-                    {
+                    if(!StrStdToWx(tmp.substr(0, tmp.size() - 1)).ToLong(&progress)) {
                         continue;
                     }
 
-                    if(progress > 99) // Maximum is 99 because 100 will stop the ProgressDialog
-                    {
+                    if(progress > 99) { // Maximum is 99 because 100 will stop the ProgressDialog
                         progress = 99;
                     }
 
-                    if(!dialog->Update(progress))
-                    {
-                        if(wxMessageBox(_("Are you sure you want to cancel the insatallation ?"), _("Cancel"), wxYES_NO | wxICON_QUESTION, this) == wxNO)
-                        {
+                    if(!dialog->Update(progress)) {
+                        if(wxMessageBox(_("Are you sure you want to cancel the insatallation ?"), _("Cancel"), wxYES_NO | wxICON_QUESTION, this) == wxNO) {
                             dialog->Resume();
-                        }
-                        else
-                        {
+                        } else {
                             exit(1);
                         }
                     }
-                }
-                else
-                {
-                    if(tmp == "pulse")
-                    {
+                } else {
+                    if(tmp == "pulse") {
                         tmp = "";
                     }
 
-                    if(!dialog->Pulse(StrStdToWx(tmp)))
-                    {
-                        if(wxMessageBox(_("Are you sure you want to cancel the insatallation ?"), _("Cancel"), wxYES_NO | wxICON_QUESTION, this) == wxNO)
-                        {
+                    if(!dialog->Pulse(StrStdToWx(tmp))) {
+                        if(wxMessageBox(_("Are you sure you want to cancel the insatallation ?"), _("Cancel"), wxYES_NO | wxICON_QUESTION, this) == wxNO) {
                             dialog->Resume();
-                        }
-                        else
-                        {
+                        } else {
                             exit(1);
                         }
                     }
 
-                    if(!tmp.empty())
-                    {
+                    if(!tmp.empty()) {
                         log << StrStdToWx(tmp + "\n");
                     }
                 }
@@ -305,19 +268,18 @@ void MainPanel::OnInstall(wxCommandEvent& event)
         dialog->Destroy();
 
         int exitCode = pipe.Close();
-        if(exitCode == 0)
-        {
-            wxMessageBox(_("Installation succeded !"), _("Installation"), wxOK | wxICON_INFORMATION, this);
-        }
-        else
-        {
-            wxMessageBox(wxString(_("Installation failed !")) + _T("\nExit code: ") + wxNbToStr(exitCode) + _T("\nLog:\n") + log, _("Installation"), wxOK | wxICON_ERROR, this);
+        wxMessageBox(_("Installation done !"), _("Installation"), wxOK | wxICON_INFORMATION, this);
+        if(exitCode == 1) {
+            wxPrintf(wxString(_("Installation failed !")) + _T("\nExit code: ") + wxNbToStr(exitCode) + _T("\nLog:\n") + log);
+        //if(exitCode == 0) {
+        //    wxMessageBox(_("Installation succeded !"), _("Installation"), wxOK | wxICON_INFORMATION, this);
+        //} else {
+        //    wxMessageBox(wxString(_("Installation failed !")) + _T("\nExit code: ") + wxNbToStr(exitCode) + _T("\nLog:\n") + log, _("Installation"), wxOK | wxICON_ERROR, this);
         }
     }
 }
 //------------------------------------------------------------------------------
-void MainPanel::OnShowAllDrive(wxCommandEvent& event)
-{
+void MainPanel::OnShowAllDrive(wxCommandEvent& event) {
     RefreshListContent();
 }
 //------------------------------------------------------------------------------

@@ -20,11 +20,11 @@
 #include "wx/wxprec.h"
 
 #ifdef __BORLANDC__
-    #pragma hdrstop
+#pragma hdrstop
 #endif
 
 #ifndef WX_PRECOMP
-    #include "wx/wx.h"
+#include "wx/wx.h"
 #endif
 //------------------------------------------------------------------------------
 #include <wx/vscroll.h>
@@ -49,8 +49,7 @@ class MainFrame;
 //------------------------------------------------------------------------------
 void SendNotification(const wxString &title, const wxString &text = _T(""), wxString iconFilename = _T(""));
 //------------------------------------------------------------------------------
-class MainPanel : public wxPanel
-{
+class MainPanel : public wxPanel {
 public:
     MainPanel(wxWindow* parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxTAB_TRAVERSAL );
     ~MainPanel();

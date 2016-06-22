@@ -23,11 +23,11 @@
 #include "wx/wxprec.h"
 
 #ifdef __BORLANDC__
-    #pragma hdrstop
+#pragma hdrstop
 #endif
 
 #ifndef WX_PRECOMP
-    #include "wx/wx.h"
+#include "wx/wx.h"
 #endif
 //------------------------------------------------------------------------------
 #include <wx/print.h>
@@ -40,8 +40,7 @@
 #include "AppConfig.hpp"
 //------------------------------------------------------------------------------
 
-class MainFrame : public wxFrame
-{
+class MainFrame : public wxFrame {
 public:
     MainFrame(const wxString& title, const wxPoint& pos, const wxSize& size, long style = wxDEFAULT_FRAME_STYLE);
     void OnQuit(wxCommandEvent& event);

@@ -51,11 +51,9 @@ catch(std::exception &e)                                                        
     cerr << "What: " << e.what() << endl;                                                     \
 }
 //------------------------------------------------------------------------------
-namespace En
-{
+namespace En {
 //------------------------------------------------------------------------------
-class MyException : public std::exception
-{
+class MyException : public std::exception {
 public:
     MyException(const std::string &info) throw();
     virtual ~MyException() throw();

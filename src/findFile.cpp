@@ -20,33 +20,28 @@
 #include "findFile.hpp"
 //------------------------------------------------------------------------------
 
-wxString findFile(const wxString &str)
-{
+wxString findFile(const wxString &str) {
     wxString testPath;
 
     testPath = wxGetCwd() + _T("/") + str;
-    if(wxFileExists(testPath) || wxDirExists(testPath)) // Si c'est dans le dossier ./
-    {
+    if(wxFileExists(testPath) || wxDirExists(testPath)) { // Si c'est dans le dossier ./
         return testPath;
     }
 
     testPath = _T("../") + str;
-    if(wxFileExists(testPath) || wxDirExists(testPath)) // Si c'est dans le dossier ../
-    {
+    if(wxFileExists(testPath) || wxDirExists(testPath)) { // Si c'est dans le dossier ../
         return testPath;
     }
 
-    #if defined(__UNIX__)
+#if defined(__UNIX__)
     testPath = wxString(wxStandardPaths::Get().GetInstallPrefix() + _T("/share/") + _T(PACKAGE) + _T("/") + str);
-    if(wxFileExists(testPath) || wxDirExists(testPath)) // Si c'est dans le dossier /usr/.../share/nomprog
-    {
+    if(wxFileExists(testPath) || wxDirExists(testPath)) { // Si c'est dans le dossier /usr/.../share/nomprog
         return testPath;
     }
-    #endif // defined(__UNIX__)
+#endif // defined(__UNIX__)
 
     testPath = wxString(wxStandardPaths::Get().GetDataDir() + _T("/") + str);
-    if(wxFileExists(testPath) || wxDirExists(testPath)) // Si c'est dans le dossier /usr/.../share/nomPaquet
-    {
+    if(wxFileExists(testPath) || wxDirExists(testPath)) { // Si c'est dans le dossier /usr/.../share/nomPaquet
         return testPath;
     }
 

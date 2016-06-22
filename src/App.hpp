@@ -20,11 +20,11 @@
 #include "wx/wxprec.h"
 
 #ifdef __BORLANDC__
-    #pragma hdrstop
+#pragma hdrstop
 #endif
 
 #ifndef WX_PRECOMP
-    #include "wx/wx.h"
+#include "wx/wx.h"
 #endif
 //------------------------------------------------------------------------------
 #include <wx/intl.h>
@@ -41,8 +41,7 @@
 #if not defined APP_HPP_WINUSBGUI
 #define APP_HPP_WINUSBGUI
 
-class App : public wxApp
-{
+class App : public wxApp {
 public:
     virtual bool OnInit();
     virtual int OnRun();

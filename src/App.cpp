@@ -20,7 +20,7 @@
 #include "config.hpp"
 
 #if USE_LIBNOTIFY == 1
-    #include <libnotify/notify.h>
+#include <libnotify/notify.h>
 #endif
 
 #include "strWxStdConv.hpp"
@@ -30,16 +30,15 @@
 IMPLEMENT_APP(App)
 
 #ifdef __WXMAC__
-    #include <ApplicationServices/ApplicationServices.h>
+#include <ApplicationServices/ApplicationServices.h>
 #endif
 //------------------------------------------------------------------------------
-bool App::OnInit()
-{
-    #ifdef __WXMAC__
+bool App::OnInit() {
+#ifdef __WXMAC__
     ProcessSerialNumber PSN;
     GetCurrentProcess(&PSN);
     TransformProcessType(&PSN,kProcessTransformToForegroundApplication);
-    #endif
+#endif
 
     // Création du Handler pour les images (permet de les ouvrir)...
     wxInitAllImageHandlers();
@@ -51,34 +50,30 @@ bool App::OnInit()
     // Mise en place de la langue par défaut du système
     m_locale.Init(wxLANGUAGE_DEFAULT);
     {
-       wxLogNull noLog; // Supprime les erreurs si les catalogues n'existent pas
-       // Catalogue de l'application
-       m_locale.AddCatalog(_T("trad"));
-       // Catalogue de wxWidgets
-       m_locale.AddCatalog(_T("wxstd"));
+        wxLogNull noLog; // Supprime les erreurs si les catalogues n'existent pas
+        // Catalogue de l'application
+        m_locale.AddCatalog(_T("trad"));
+        // Catalogue de wxWidgets
+        m_locale.AddCatalog(_T("wxstd"));
     }
 
-    #if USE_LIBNOTIFY == 1
-    if(!notify_init(StrWxToStd(PROG_FULL_NAME_GETTEXT).c_str()))
-    {
+#if USE_LIBNOTIFY == 1
+    if(!notify_init(StrWxToStd(PROG_FULL_NAME_GETTEXT).c_str())) {
         std::cerr << "Lib notify not initialised !" << std::endl;
         return false;
     }
-    #endif
+#endif
 
-    try
-    {
+    try {
         wxString frameTitle = PROG_FULL_NAME_GETTEXT;
-        #if DEBUG == 1
-           frameTitle += _T(" - Debug");
-        #endif
+#if DEBUG == 1
+        frameTitle += _T(" - Debug");
+#endif
 
         m_frame = new MainFrame(frameTitle,  wxDefaultPosition, wxSize(400, 500));
         m_frame->SetMinSize(wxSize(300, 300));
         m_frame->Show(true);
-    }
-    catch(const std::exception& e) //Rattrape toutes les exceptions
-    {
+    } catch(const std::exception& e) { //Rattrape toutes les exceptions
         wxMessageBox(_("Error : ") + wxString(e.what(), wxConvUTF8), _("Error..."),  wxOK | wxICON_ERROR);
         exit(1);
     }
@@ -86,40 +81,29 @@ bool App::OnInit()
     return true;
 }
 //------------------------------------------------------------------------------
-int App::OnRun()
-{
+int App::OnRun() {
     bool isException = false;
     wxString msg;
 
     int code = 0;
 
-    try
-    {
+    try {
         code = wxApp::OnRun();
-    }
-    catch(const std::exception& e) //Rattrape toutes les exceptions
-    {
+    } catch(const std::exception& e) { //Rattrape toutes les exceptions
         isException = true;
         msg = wxString(e.what(), wxConvUTF8);
-    }
-    catch(int errCode)
-    {
+    } catch(int errCode) {
         msg << _T("Error \"") << errCode << _T("\" has occured !");
         isException = true;
-    }
-    catch(wxString info)
-    {
+    } catch(wxString info) {
         msg = info;
         isException = true;
-    }
-    catch(...)
-    {
+    } catch(...) {
         msg = _("Unknown error as occured !");
         isException = true;
     }
 
-    if(isException)
-    {
+    if(isException) {
         std::cerr << msg << std::endl;
         wxMessageBox(_("Fatal error : ") + wxString(_T("\n")) + msg, _("Error..."),  wxOK | wxICON_ERROR, m_frame);
         return 1;

@@ -22,57 +22,42 @@
 #include "MyException.hpp"
 
 //------------------------------------------------------------------------------
-PipeManager::PipeManager(const std::string &command)
-{
+PipeManager::PipeManager(const std::string &command) {
     m_pipe = popen(command.c_str(), "r");
 
-    if(m_pipe == NULL)
-    {
+    if(m_pipe == NULL) {
         MY_THROW("Can't open pipe for command '" << command << "' !");
     }
 }
 //------------------------------------------------------------------------------
-PipeManager::~PipeManager()
-{
-    if(m_pipe != NULL)
-    {
+PipeManager::~PipeManager() {
+    if(m_pipe != NULL) {
         pclose(m_pipe);
     }
 }
 //------------------------------------------------------------------------------
-int PipeManager::Close()
-{
-    if(m_pipe)
-    {
+int PipeManager::Close() {
+    if(m_pipe) {
         int exitCode = pclose(m_pipe);
         m_pipe = NULL;
         return exitCode;
-    }
-    else
-    {
+    } else {
         MY_THROW("Pipe not open !");
     }
 }
 //------------------------------------------------------------------------------
-bool PipeManager::GetLine(std::string &line)
-{
+bool PipeManager::GetLine(std::string &line) {
     line = "";
     char letter = '\0';
 
-    while(not feof(m_pipe))
-    {
+    while(not feof(m_pipe)) {
         letter = fgetc(m_pipe);
 
-        if(letter == '\n' || letter == '\r')
-        {
+        if(letter == '\n' || letter == '\r') {
             return 1;
-        }
-        else if(letter == EOF)
-        {
+        } else if(letter == EOF) {
             return 0;
-        }
-        else
-        {
+        } else {
             line += letter;
         }
     }
@@ -80,29 +65,24 @@ bool PipeManager::GetLine(std::string &line)
     return 1;
 }
 //------------------------------------------------------------------------------
-std::string PipeManager::GetLine()
-{
+std::string PipeManager::GetLine() {
     std::string str;
     GetLine(str);
     return str;
 }
 //------------------------------------------------------------------------------
-bool PipeManager::IsEof() const
-{
+bool PipeManager::IsEof() const {
     return feof(m_pipe);
 }
 //------------------------------------------------------------------------------
-int GetProcessOutput(const std::string &command, std::string &str)
-{
+int GetProcessOutput(const std::string &command, std::string &str) {
     str = "";
     PipeManager pipe(command);
-    while(! pipe.IsEof())
-    {
+    while(! pipe.IsEof()) {
         str += pipe.GetLine() + "\n";
     }
 
-    if(!str.empty())
-    {
+    if(!str.empty()) {
         str.erase(str.end() - 1);
     }
 

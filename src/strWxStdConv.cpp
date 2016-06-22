@@ -18,10 +18,8 @@
 //------------------------------------------------------------------------------
 #include "strWxStdConv.hpp"
 //------------------------------------------------------------------------------
-wxString wxStrAutoCut(wxString str, const unsigned int &maxLen)
-{
-    if(str.Len() > maxLen)
-    {
+wxString wxStrAutoCut(wxString str, const unsigned int &maxLen) {
+    if(str.Len() > maxLen) {
         str = str.Mid(0, maxLen - 3);
         str << _T("...");
     }
@@ -29,24 +27,20 @@ wxString wxStrAutoCut(wxString str, const unsigned int &maxLen)
     return str;
 }
 //------------------------------------------------------------------------------
-std::string StrWxToStd(const wxString &str)
-{
-	return std::string(str.mb_str(wxConvUTF8));
+std::string StrWxToStd(const wxString &str) {
+    return std::string(str.mb_str(wxConvUTF8));
 }
 //------------------------------------------------------------------------------
-wxString StrStdToWx(const std::string &str)
-{
-	return wxString(str.c_str(), wxConvUTF8);
+wxString StrStdToWx(const std::string &str) {
+    return wxString(str.c_str(), wxConvUTF8);
 }
 //------------------------------------------------------------------------------
 // Filename
-std::string filenameWxToStd(const wxString &str)
-{
-	return std::string(str.mb_str(wxConvFile));
+std::string filenameWxToStd(const wxString &str) {
+    return std::string(str.mb_str(wxConvFile));
 }
 //------------------------------------------------------------------------------
-wxString filenameStdToWx(const std::string &str)
-{
-	return wxString(str.c_str(), wxConvFile);
+wxString filenameStdToWx(const std::string &str) {
+    return wxString(str.c_str(), wxConvFile);
 }
 //------------------------------------------------------------------------------

@@ -22,21 +22,19 @@
 #include <wx/toolbar.h>
 //------------------------------------------------------------------------------
 
-MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(NULL, -1, title, pos, size, style)
-{
+MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(NULL, -1, title, pos, size, style) {
     // Presentation général
     wxString ImgFileName;
-    #if defined(__WXMSW__)
-        SetIcon(wxIcon(_T("win32icon")));
-    #elif defined(__UNIX__)
-        ImgFileName = findFile(_T("data/icon.png"));
-        if(wxFileExists(ImgFileName))
-        {
-            SetIcon(wxIcon(ImgFileName, wxBITMAP_TYPE_PNG));
-        }
-    #endif //#ifdef WIN32
+#if defined(__WXMSW__)
+    SetIcon(wxIcon(_T("win32icon")));
+#elif defined(__UNIX__)
+    ImgFileName = findFile(_T("data/icon.png"));
+    if(wxFileExists(ImgFileName)) {
+        SetIcon(wxIcon(ImgFileName, wxBITMAP_TYPE_PNG));
+    }
+#endif //#ifdef WIN32
 
-        // File menu
+    // File menu
     wxMenu *FileMenu = new wxMenu;
     m_menuItemShowAll = new wxMenuItem(FileMenu, wxID_ANY, wxString(_("Show all drive")) + _T("\tCtrl+A"), _("Show all drives, even those not detected as USB stick."), wxITEM_CHECK);
     FileMenu->Append(m_menuItemShowAll);
@@ -44,11 +42,11 @@ MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& si
     FileMenu->AppendSeparator();
     FileMenu->Append(wxID_EXIT);
 
-        // Help Menu
+    // Help Menu
     wxMenu *HelpMenu = new wxMenu;
     HelpMenu->Append(wxID_ABOUT);
 
-        // Menubar
+    // Menubar
     m_MenuBar = new wxMenuBar();
     m_MenuBar->Append(FileMenu,_("&File"));
     m_MenuBar->Append(HelpMenu,_("&Help"));
@@ -56,32 +54,29 @@ MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& si
     SetMenuBar(m_MenuBar);
 
     // Body
-	wxBoxSizer* MainSizer = new wxBoxSizer( wxVERTICAL );
+    wxBoxSizer* MainSizer = new wxBoxSizer( wxVERTICAL );
 
-	m_MainPanel = new MainPanel(this ,wxID_ANY);
+    m_MainPanel = new MainPanel(this,wxID_ANY);
     MainSizer->Add(m_MainPanel, 1, wxEXPAND | wxALL, 4);
 
-	SetSizer( MainSizer );
+    SetSizer( MainSizer );
 
-	// Events
+    // Events
     Connect( m_menuItemShowAll->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MainPanel::OnShowAllDrive), NULL, m_MainPanel);
 
     Connect( wxID_EXIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MainFrame::OnQuit));
     Connect( wxID_ABOUT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MainFrame::OnAbout));
 }
 //------------------------------------------------------------------------------
-void MainFrame::OnQuit(wxCommandEvent& event)
-{
+void MainFrame::OnQuit(wxCommandEvent& event) {
     Close(true);
 }
 //------------------------------------------------------------------------------
-bool MainFrame::IsShowAllChecked() const
-{
+bool MainFrame::IsShowAllChecked() const {
     return m_menuItemShowAll->IsChecked();
 }
 //------------------------------------------------------------------------------
-void MainFrame::OnAbout(wxCommandEvent& event)
-{
+void MainFrame::OnAbout(wxCommandEvent& event) {
     DialogAbout MyDialogAbout(this, wxID_ANY);
     MyDialogAbout.ShowModal();
 }

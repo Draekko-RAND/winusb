@@ -2,7 +2,7 @@ Source: winusb
 Section: x11
 Priority: extra
 Maintainer: Draekko / draekko <draekko.sofware+winusb@gmail.com>
-Build-Depends: debhelper (>= 7), autotools-dev, libwxgtk3.0-dev
+Build-Depends: debhelper (>= 7), autotools-dev, libwxgtk3.0-dev, gksu
 Standards-Version: 3.8.1
 Homepage: https://github.com/draekko/winusb
 

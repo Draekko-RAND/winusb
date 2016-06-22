@@ -20,11 +20,11 @@
 #include "wx/wxprec.h"
 
 #ifdef __BORLANDC__
-    #pragma hdrstop
+#pragma hdrstop
 #endif
 
 #ifndef WX_PRECOMP
-    #include "wx/wx.h"
+#include "wx/wx.h"
 #endif
 //------------------------------------------------------------------------------
 #include <wx/stdpaths.h>
@@ -33,7 +33,7 @@
 //------------------------------------------------------------------------------
 
 #if not defined PACKAGE
-    #error PACKAGE should be defined.
+#error PACKAGE should be defined.
 #endif
 
 #if not defined FIND_FILE_HPP_WINUSBGUI

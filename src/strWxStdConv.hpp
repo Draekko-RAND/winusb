@@ -20,11 +20,11 @@
 #include "wx/wxprec.h"
 
 #ifdef __BORLANDC__
-    #pragma hdrstop
+#pragma hdrstop
 #endif
 
 #ifndef WX_PRECOMP
-    #include "wx/wx.h"
+#include "wx/wx.h"
 #endif
 //------------------------------------------------------------------------------
 #include "math.h"
@@ -32,7 +32,7 @@
 //------------------------------------------------------------------------------
 
 #if not defined PACKAGE
-    #error "This program should be built with its package !"// #define PACKAGE devismaker
+#error "This program should be built with its package !"// #define PACKAGE devismaker
 #endif
 
 #include <sstream>
@@ -51,13 +51,11 @@ std::string filenameWxToStd(const wxString &str);
 wxString filenameStdToWx(const std::string &str);
 //------------------------------------------------------------------------------
 template < typename T >
-bool wxStrToNb(wxString str, T *nb) // Avec verification
-{
+bool wxStrToNb(wxString str, T *nb) { // Avec verification
     // 1 : Remplacement des "." par des ","
     int lang = wxLocale::GetSystemLanguage();
 
-    if(lang == wxLANGUAGE_FRENCH || lang == wxLANGUAGE_FRENCH_BELGIAN || lang == wxLANGUAGE_FRENCH_CANADIAN || lang == wxLANGUAGE_FRENCH_LUXEMBOURG || lang == wxLANGUAGE_FRENCH_MONACO || lang == wxLANGUAGE_FRENCH_SWISS)
-    {
+    if(lang == wxLANGUAGE_FRENCH || lang == wxLANGUAGE_FRENCH_BELGIAN || lang == wxLANGUAGE_FRENCH_CANADIAN || lang == wxLANGUAGE_FRENCH_LUXEMBOURG || lang == wxLANGUAGE_FRENCH_MONACO || lang == wxLANGUAGE_FRENCH_SWISS) {
         // Si on est en france ==> On remplace les "." du pavé numérique par des ",".
         str.Replace(_T("."), _T(","));
     }
@@ -70,55 +68,48 @@ bool wxStrToNb(wxString str, T *nb) // Avec verification
 
     *nb = T(tempNb);
 
-	return isOk;
+    return isOk;
 }
 //------------------------------------------------------------------------------
 // Sans verif...
 template < typename T >
-T wxStrToNb(const wxString &str)
-{
+T wxStrToNb(const wxString &str) {
     T tempNb;
     wxStrToNb(str, &tempNb);
     return tempNb;
 }
 //------------------------------------------------------------------------------
 template < typename T >
-wxString wxNbToStr(const T &nb)
-{
+wxString wxNbToStr(const T &nb) {
     // On doit passer par les std::string pour eviter les nb scientifiques.
-	return StrStdToWx(nbToString(nb));
+    return StrStdToWx(nbToString(nb));
 }
 //------------------------------------------------------------------------------
 template < typename T >
-wxString wxNbToHexaStr(const T &nb)
-{
+wxString wxNbToHexaStr(const T &nb) {
     std::stringstream ss;
     std::string str;
     ss << std::hex << nb;
 
-	return StrStdToWx(ss.str());
+    return StrStdToWx(ss.str());
 }
 //------------------------------------------------------------------------------
 template < typename T >
-wxString ArrangeByteSize(const T &size)
-{
+wxString ArrangeByteSize(const T &size) {
     // Selection de l'unité...
     const wxString unitList[] = {_("bytes"), _T("Kio"), _T("Mio"), _T("Gio"), _T("Tio") };
     const int unityListSize = sizeof(unitList) / sizeof(wxString);
     int unity = 0;
     unsigned long unityDiv = 1;
 
-    while(1)
-    {
+    while(1) {
         unityDiv = pow(1024, unity);
 
-        if(double(size) / double(unityDiv) < 999)
-        {
+        if(double(size) / double(unityDiv) < 999) {
             break; // Ok : bonne unité
         }
 
-        if(unity >= unityListSize - 1)
-        {
+        if(unity >= unityListSize - 1) {
             break;
         }
 
@@ -138,12 +129,10 @@ wxString ArrangeByteSize(const T &size)
 
     // On arrondi
     int virgulePos = tempStr.Find(virguleChar);
-    if(virgulePos != wxNOT_FOUND && tempStr.Len() - virgulePos > synifNb + 1) // Trop de chiffres significatifs
-    {
+    if(virgulePos != wxNOT_FOUND && tempStr.Len() - virgulePos > synifNb + 1) { // Trop de chiffres significatifs
         wxChar lastNbChar = tempStr[tempStr.Find(virguleChar) + synifNb + 1];
         // ==> A faire
-        if(wxStrToNb<int>(lastNbChar) >= 5) // Si le chiffre avant le dernier chiffre significatif est sup à 5 ==> rajout de 10 ^ -synifNb
-        {
+        if(wxStrToNb<int>(lastNbChar) >= 5) { // Si le chiffre avant le dernier chiffre significatif est sup à 5 ==> rajout de 10 ^ -synifNb
             // Utilise le nombre arrondi...
             tempStr = wxNbToStr(nb + pow(10, -synifNb));
             tempStr.Replace( _T("."), virguleChar);

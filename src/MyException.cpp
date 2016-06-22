@@ -19,21 +19,17 @@
 #include "MyException.hpp"
 #include <iostream>
 //------------------------------------------------------------------------------
-namespace En
-{
+namespace En {
 //------------------------------------------------------------------------------
-MyException::MyException(const std::string& info) throw() : m_info(info)
-{
+MyException::MyException(const std::string& info) throw() : m_info(info) {
     //std::cerr << info << std::endl;
 }
 //------------------------------------------------------------------------------
-MyException::~MyException() throw()
-{
+MyException::~MyException() throw() {
 
 }
 //------------------------------------------------------------------------------
-const char* MyException::what() const throw()
-{
+const char* MyException::what() const throw() {
     return m_info.c_str();
 }
 //------------------------------------------------------------------------------
